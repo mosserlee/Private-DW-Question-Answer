@@ -124,6 +124,7 @@ class DWQA_Notifications {
 		} else {
 			$user_id = absint( get_post_field( 'post_author', $answer_id ) );
 			$user_display_name = get_the_author_meta( 'display_name', $user_id );
+			$answer_user_link = get_the_author_meta( 'user_url', $user_id );
 			$user_email = get_the_author_meta( 'display_name', $user_id );
 			$avatar = get_avatar( $user_id, '60' );
 		}
@@ -142,6 +143,7 @@ class DWQA_Notifications {
 		}
 
 		$message = str_replace( '{answer_author}', $user_display_name, $message );
+		$message = str_replace( '{answer_author_link}', $answer_user_link, $message );
 		$message = str_replace( '{question_link}', get_permalink( $question_id ), $message );
 		$message = str_replace( '{answer_link}', get_permalink( $question_id ) . '#answer-' . $answer_id, $message );
 		$message = str_replace( '{question_title}', get_the_title( $question_id ), $message );
@@ -242,6 +244,7 @@ class DWQA_Notifications {
 			$answer_user_id = absint( get_post_field( 'post_author', $answer_id ) );
 			$answer_user_display_name = get_the_author_meta( 'display_name', $answer_user_id );
 			$answer_user_email = get_the_author_meta( 'display_name', $answer_user_id );
+			$answer_user_link = get_the_author_meta( 'user_url', $answer_user_id );
 			$answer_avatar = get_avatar( $answer_user_id, '60' );
 		}
 
@@ -262,6 +265,7 @@ class DWQA_Notifications {
 
 			$message = str_replace( '{answer_avatar}', $answer_avatar, $message );
 			$message = str_replace( '{answer_author}', $answer_user_display_name, $message );
+			$message = str_replace( '{answer_author_link}', $answer_user_link, $message );
 			$message = str_replace( '{question_link}', get_permalink( $question_id ), $message );
 			$message = str_replace( '{question_author}', $user_display_name, $message );
 			$message = str_replace( '{answer_link}', get_permalink( $question_id ) . '#answer-' . $answer_id, $message );
@@ -453,12 +457,13 @@ class DWQA_Notifications {
 	}
 
 	public function send( $to, $subject, $message, $headers = '', $attachments = array() ) {
-		add_filter( 'wp_mail_from', array( $this, 'get_from_address' ) );
+		//add_filter( 'wp_mail_from', array( $this, 'get_from_address' ) );
 		add_filter( 'wp_mail_content_type', array( $this, 'get_content_type' ) );
 
-		$sended = wp_mail( $to, $subject, $message, $headers, $attachments );
+		//$sended = wp_mail( $to, $subject, $message, $headers, $attachments );
+		$sended = wp_mail( $to, $subject, $message, $headers );
 
-		remove_filter( 'wp_mail_from', array( $this, 'get_from_address' ) );
+		//remove_filter( 'wp_mail_from', array( $this, 'get_from_address' ) );
 		remove_filter( 'wp_mail_content_type', array( $this, 'get_content_type' ) );
 		return $sended;
 	}
