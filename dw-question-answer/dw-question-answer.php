@@ -1,6 +1,6 @@
 <?php
 /**
- *  Plugin Name: DW Question Answer
+ *  Plugin Name: Private DW Question Answer 
  *  Description: A WordPress plugin was make by DesignWall.com to build an Question Answer system for support, asking and comunitcate with your customer
  *  Author: DesignWall
  *  Author URI: http://www.designwall.com
